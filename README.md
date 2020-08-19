@@ -13,6 +13,7 @@ A long version of coaching history in which each row corresponds to team's seaso
 | games_coached | Number of games coached by that coach for that team in that season |
 | games_W | How many games the coach won that season |
 | games_L | How many games the coach lost that season |
-| team_coach_number | Which coach that team is on for that season, starting with 1\n This column with games_coached you can try to attribute which games were coached by which coach |
+| team_coach_number | Which coach that team is on for that season, starting with 1 
+This column with games_coached you can try to attribute which games were coached by which coach |
 | seasons_with_team | Number of seasons the coach has been with the team |
 | new_coach | Binary: 1 first season with the team, 0 returning coach |
