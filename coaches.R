@@ -1,5 +1,6 @@
 # * Purpose: Scrape Coaches from bbref
 
+# * Function to scrape the bbref table with coaching data
 get_coaches_season = function(season) {
   url = paste0('https://www.basketball-reference.com/leagues/NBA_',season,'_coaches.html')
   page = tryCatch({
@@ -22,6 +23,7 @@ get_coaches_season = function(season) {
   return(coach_page)
 }
 
+# * Scrape all seasons from 1960-2020
 `%dopar%` = foreach::`%dopar%`
 `%:%` = foreach::`%:%`
 # Set up parallel running
@@ -37,7 +39,7 @@ coaches_df = foreach::foreach(season=1960:2020,
 }
 # Stop parralel
 parallel::stopCluster(cl)
-
+# Clean Table
 coaches_df = coaches_df %>%
   mutate(games_coached = as.integer(games_coached),
          games_W = as.integer(games_won),
@@ -45,10 +47,10 @@ coaches_df = coaches_df %>%
          seasons_with_team = as.integer(seasons_with_team)
   ) %>%
   select(-games_won, -games_losed)
+# Save
+#write_csv(coaches_df, path = '')
 
-write_csv(coaches_df, path = '~/Documents/nba_projects/quarter_splits/coaches_long.csv')
-
-# Widen Coaches
+# Widen Coaches Table
 wide_coach = coaches_df %>% group_by(team_abbrv, coach_name) %>%
   summarise(
     start_season = min(season),
@@ -58,3 +60,5 @@ wide_coach = coaches_df %>% group_by(team_abbrv, coach_name) %>%
     games_L = sum(games_L),
     seasons_coach = sum(seasons_with_team)
   )
+# Save
+#write_csv(wide_coach, path='')
